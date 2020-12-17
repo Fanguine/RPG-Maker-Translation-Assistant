@@ -1,0 +1,109 @@
+body, html {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    background-color: #ffffffef;
+}
+
+/*
+ * Toolbar
+ */
+.toolbar {
+    -webkit-app-region: drag;
+}
+
+.toolbar-button-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333333;
+}
+
+.toolbar-button {
+    -webkit-app-region: no-drag;
+    display: block;
+    padding: 12px;
+    padding-top: 6px;
+    color: white;
+    text-decoration: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+.toolbar-button:hover {
+    background-color: #111111;
+}
+
+.align-left {
+    float: left;
+}
+
+.align-right {
+    float: right;
+}
+
+/*
+ * Game select content
+ */
+.game-select-content {
+    display: flex;
+    height: calc(100% - 45px);
+}
+
+.game-select-layout {
+    margin: auto;
+}
+
+.game-folder-select-buttons-container {
+    display: flex;
+    width: 250px;
+    margin: 0 auto;
+}
+
+.select-folder-button {
+    width: 176px;
+    padding: 12px;
+}
+
+.remove-folder-button {
+    width: 21px;
+    padding: 12px;
+    padding-left: 17px;
+    padding-right: 7px;
+}
+
+.decrypt-files-button {
+    width: 226px;
+    padding: 12px;
+}
+
+.button {
+    margin: 0 auto;
+    background-color: #333333;
+    user-select: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #111111;
+}
+
+.button-disabled {
+    margin: 0 auto;
+    background-color: #888888;
+    user-select: none;
+}
+
+.button, span {
+    color: white;
+    text-decoration: none;
+}
+
+.label-container {
+    text-align: center;
+}
+
+.label {
+    color: #000000;
+}

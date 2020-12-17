@@ -7,16 +7,45 @@
         <link rel="stylesheet" href="style.css">
     </head>
 
-    <body style="background: white;">
-        <h1>RPG Maker Translation Assistant</h1>
-        <p>RPG Maker Translation Assistant</p>
-        <div>
-            <button id="selectGameFolderButton" type="button">Select game folder</button>
+    <body>
+        <div style="-webkit-app-region: drag">
+            <ul class="toolbar-button-list">
+                <li><span id="closeProgramButton" class="toolbar-button align-right">&#128473;&#xFE0E;</span></li>
+                <li><span id="maximizeProgramButton" class="toolbar-button align-right">&#128470;&#xFE0E;</span></li>
+                <li><span id="minimizeProgramButton" class="toolbar-button align-right">&#128469;&#xFE0E;</span></li>
+            </ul>
         </div>
-        <div>
-            <span id="gameFolderPathLabel"></span>
+
+        <div class="game-select-content">
+            <div class="game-select-layout">
+                <div class="game-folder-select-buttons-container">
+                    <div id="selectGameFolderButton" class="button select-folder-button">
+                        <span>Select Game Folder</span>
+                    </div>
+                    <div id="removeGameFolderButton" class="button-disabled remove-folder-button">
+                        <span>&#8722;</span>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="label-container">
+                    <span id="gameFolderPathLabel" class="label">Please select the folder of the game.</span>
+                </div>
+
+                <br>
+
+                <div id="decryptDataFilesButton" class="button-disabled decrypt-files-button">
+                    <span>Decrypt Files</span>
+                </div>
+
+                <br>
+
+                <div class="label-container">
+                    <span id="gameFolderPathLabel" class="label"></span>
+                </div>
+            </div>
         </div>
     </body>
-
     <script type='text/javascript' src="./../src/renderer.js"></script>
 </html>
