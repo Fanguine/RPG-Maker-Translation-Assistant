@@ -1,24 +1,18 @@
-const { app, dialog, ipcMain, BrowserWindow } = require('electron');
+const { app, dialog, ipcMain } = require('electron');
+const Window = require('./window.js');
 
 ipcMain.on('selectGameFolder', (event) => {
     const gameFolderPath = dialog.showOpenDialogSync({ properties: ['openDirectory', 'dontAddToRecent'] })[0];
     event.sender.send('setGameFolderPathLabel', gameFolderPath);
 });
 
-function createWindow () {
-    const win = new BrowserWindow({
-        width: 800,
-        height: 600,
-        webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false
-        }
+function main () {
+    const mainWindow = new Window({
+        file: './public/index.html'
     });
+};
 
-    win.loadFile('./public/index.html');
-}
-
-app.whenReady().then(createWindow);
+app.whenReady().then(main);
 
 app.on('window-all-closed', () => {
     app.quit();
