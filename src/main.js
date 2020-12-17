@@ -1,10 +1,17 @@
 const { app, dialog, ipcMain } = require('electron');
+const fs = require('fs');
 const Window = require('./window.js');
 
 ipcMain.on('selectGameFolder', (event) => {
-    const gameFolderPath = dialog.showOpenDialogSync({ properties: ['openDirectory', 'dontAddToRecent'] })[0];
+    const gameFolderPath = dialog.showOpenDialogSync({ properties: ['openDirectory', 'dontAddToRecent'] });
     if (gameFolderPath) {
-        event.sender.send('setGameFolderPathLabel', gameFolderPath);
+        const dataFolderPath = gameFolderPath[0] + '/www/data';
+        if (fs.existsSync(dataFolderPath)) {
+            const dataFilePaths = fs.readdirSync(dataFolderPath);
+            if (dataFilePaths.length > 0) {
+                event.sender.send('setGameFolderPathLabel', gameFolderPath);
+            }
+        }
     }
 });
 
