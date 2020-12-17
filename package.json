@@ -2,9 +2,18 @@
   "name": "rpg-maker-translation-assistant",
   "version": "0.0.1",
   "description": "A tool that aims to assist with translating RPG Maker games.",
-  "main": "main.js",
-  "repository": "https://github.com/Fanguine/RPG-Maker-Translation-Assistant.git",
+  "main": "src/main.js",
+  "scripts": {
+    "serve": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Fanguine/RPG-Maker-Translation-Assistant.git"
+  },
   "author": "Fanguine <fanguine@protonmail.com>",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "electron": "^11.1.0"
+  }
 }
