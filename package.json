@@ -6,5 +6,8 @@
   "repository": "https://github.com/Fanguine/RPG-Maker-Translation-Assistant.git",
   "author": "Fanguine <fanguine@protonmail.com>",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "electron": "^11.1.0"
+  }
 }
