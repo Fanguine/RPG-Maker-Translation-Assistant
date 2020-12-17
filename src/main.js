@@ -3,7 +3,9 @@ const Window = require('./window.js');
 
 ipcMain.on('selectGameFolder', (event) => {
     const gameFolderPath = dialog.showOpenDialogSync({ properties: ['openDirectory', 'dontAddToRecent'] })[0];
-    event.sender.send('setGameFolderPathLabel', gameFolderPath);
+    if (gameFolderPath) {
+        event.sender.send('setGameFolderPathLabel', gameFolderPath);
+    }
 });
 
 function main () {
