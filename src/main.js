@@ -24,14 +24,14 @@ ipcMain.on('closeProgram', (event) => {
     app.quit();
 });
 
-ipcMain.on('selectGameFolder', (event) => {
+ipcMain.on('setGameFolder', (event) => {
     gameFolderPath = dialog.showOpenDialogSync({ properties: ['openDirectory', 'dontAddToRecent'] });
     if (gameFolderPath) {
         dataFolderPath = gameFolderPath[0] + '/www/data';
         if (fs.existsSync(dataFolderPath)) {
             const dataFilePaths = fs.readdirSync(dataFolderPath);
             if (dataFilePaths.length > 0) {
-                event.sender.send('setGameFolderPathLabel', "Selected game folder: " + gameFolderPath);
+                event.sender.send('setGameFolderPath', gameFolderPath);
             }
         }
     }
@@ -52,7 +52,7 @@ function getDecryptionKey() {
 
 };
 
-function main () {
+function main() {
     mainWindow = new Window({
         file: './public/index.html'
     });

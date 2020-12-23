@@ -1,47 +1,114 @@
 const { ipcRenderer } = require('electron');
 
-// Toolbar events
-const minimizeProgramButton = document.getElementById('minimizeProgramButton');
-minimizeProgramButton.addEventListener('click', function (e) {
+/**
+ * Toolbar button events
+ */
+document.getElementById('minimizeProgramButton').addEventListener('click', (event) => {
     ipcRenderer.send('minimizeProgram');
 });
 
 const maximizeProgramButton = document.getElementById('maximizeProgramButton');
-maximizeProgramButton.addEventListener('click', function (e) {
+maximizeProgramButton.addEventListener('click', (event) => {
     ipcRenderer.send('maximizeProgram');
 });
 
-const closeProgramButton = document.getElementById('closeProgramButton');
-closeProgramButton.addEventListener('click', function (e) {
+document.getElementById('closeProgramButton').addEventListener('click', (event) => {
     ipcRenderer.send('closeProgram');
 });
 
-// Game select content events
-const removeGameFolderButton = document.getElementById('removeGameFolderButton');
-removeGameFolderButton.addEventListener('click', function (e) {
-    if (removeGameFolderButton.classList.contains('button')) {
-        gameFolderPathLabel.innerHTML = "Please select the folder of the game."
-        removeGameFolderButton.classList.remove('button');
-        removeGameFolderButton.classList.add('button-disabled');
+ipcRenderer.on('setMaximizeWindowIcon', (e, windowMaximized) => {
+    maximizeProgramButton.innerHTML = windowMaximized ? "&#128470;&#xFE0E;" : "&#128471;&#xFE0E;";
+});
+
+/**
+ * Tab events
+ */
+const selectGameTabContent = document.getElementById('select-game-tab-content');
+const saveProjectTabContent = document.getElementById('save-project-tab-content');
+
+
+const selectGameTab = document.getElementById('select-game-tab');
+selectGameTab.addEventListener('click', (event) => {
+    hideTabContent();
+    selectGameTabContent.classList.remove('content-hidden');
+});
+
+const saveProjectTab = document.getElementById('save-project-tab');
+saveProjectTab.addEventListener('click', (event) => {
+    hideTabContent();
+    saveProjectTabContent.classList.remove('content-hidden');
+});
+
+function hideTabContent() {
+    selectGameTabContent.classList.add('content-hidden');
+
+    saveProjectTabContent.classList.add('content-hidden');
+}
+
+/**
+ * Game select tab events
+ */
+const gameFolderSelected = false;
+
+const selectGameFolderButton = document.getElementById('select-game-folder-button');
+selectGameFolderButton.addEventListener('click', (event) => {
+    ipcRenderer.send('setGameFolder');
+});
+
+const removeGameFolderButton = document.getElementById('remove-game-folder-button');
+removeGameFolderButton.addEventListener('click', (event) => {
+    if (!removeGameFolderButton.classList.contains('button-disabled')) {
+        gameFolderPathLabel.innerHTML = "No game folder selected."
+        gameFolderPath.innerHTML = ""
+        setElementState(gameFolderPath, false);
+        setButtonHideState(removeGameFolderButton, false);
         ipcRenderer.send('removeGameFolder');
     }
 });
 
-document.getElementById('selectGameFolderButton').onclick = (event) => {
-    ipcRenderer.send('selectGameFolder');
-};
-
-document.getElementById('decryptDataFilesButton').onclick = (event) => {
-    ipcRenderer.send('decryptDataFiles');
-};
-
-ipcRenderer.on('setMaximizeWindowIcon', (event, windowIsMaximized) => {
-    maximizeProgramButton.innerHTML = windowIsMaximized ? "&#128470;&#xFE0E;" : "&#128471;&#xFE0E;";
+const decryptDataFilesButton = document.getElementById('decrypt-data-files-button')
+decryptDataFilesButton.addEventListener('click', (event) => {
+    if (!decryptDataFilesButton.classList.contains('button-disabled')) {
+        ipcRenderer.send('decryptDataFiles');
+    }
 });
 
-const gameFolderPathLabel = document.getElementById('gameFolderPathLabel');
-ipcRenderer.on('setGameFolderPathLabel', (event, path) => {
-    gameFolderPathLabel.innerHTML = path;
-    removeGameFolderButton.classList.remove('button-disabled');
-    removeGameFolderButton.classList.add('button');
+
+const gameFolderPathLabel = document.getElementById('game-folder-path-label');
+const gameFolderPath = document.getElementById('game-folder-path');
+ipcRenderer.on('setGameFolderPath', (event, path) => {
+    if (path) {
+        gameFolderPathLabel.innerHTML = "Selected game folder: ";
+        gameFolderPath.innerHTML = path;
+        setElementState(gameFolderPath, true);
+        setButtonHideState(removeGameFolderButton, true);
+    }
 });
+
+function setElementState(element, state) {
+    if (element) {
+        if (state) {
+            if (element.classList.contains('content-hidden')) {
+                element.classList.remove('content-hidden');
+            }
+        } else {
+            if (!element.classList.contains('content-hidden')) {
+                element.classList.add('content-hidden');
+            }
+        }
+    }
+}
+
+function setButtonHideState(element, state) {
+    if (element && element.classList.contains('button')) {
+        if (state) {
+            if (element.classList.contains('button-disabled')) {
+                element.classList.remove('button-disabled');
+            }
+        } else {
+            if (!element.classList.contains('button-disabled')) {
+                element.classList.add('button-disabled');
+            }
+        }
+    }
+}
